@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function verifyUser()
+    {
+        // Un usuario tiene una verificación
+        return $this->hasOne('App\VerifyUser');
+    }
+
 }
