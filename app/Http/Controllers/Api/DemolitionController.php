@@ -2,9 +2,312 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Answer;
+use App\Models\Demolition;
+use App\Models\DemolitionType;
+use App\Models\Image as ImageModel;
+use App\Models\Status;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Intervention\Image\Facades\Image;
 
-class DemolitionController extends Controller
+class DemolitionController extends BaseController
 {
-    //
+    private $DemolitionController;
+
+    public function __construct()
+    {
+        $this->DemolitionController = app('App\Http\Controllers\DemolitionController');
+    }
+
+
+    public function demolitionDescription(Request $request)
+    {
+
+        $demolition = Demolition::where('id', $request->id)
+            ->with('types')
+            ->with('images')
+            ->with('answers')
+            ->with('payments')
+            ->first();
+
+        if ($demolition != null) {
+            return $this->sendResponse($demolition);
+        } else {
+            return $this->sendError('Demolitions dont found', null, 404);
+        }
+
+    }
+
+
+    public function index(Request $request)
+    {
+        $status = Status::where('name', $request->state)->first();
+        // dd($status->id);
+
+        if ($status != null) {
+            // dd($request->user()->id);
+            $demolitions = Demolition::
+            filter(
+                $request->user()->id,
+                $status->id
+            )
+                ->with('types')
+                ->with('images')
+                ->with('answers')
+                ->with('status')
+                ->get();
+
+
+            if (count($demolitions) != 0) {
+                return $this->sendResponse($demolitions->toArray());
+            } else {
+
+                return $this->sendError('Demolitions dont found', null, 404);
+            }
+
+
+        } else {
+            return $this->sendError('Status dont found', null, 400);
+        }
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+
+
+    public function cancelDemolition(Request $request)
+    {
+
+        $demolition = Demolition::where('id', $request->demolition_id)
+            ->with('answers')
+            ->with('images')
+            ->first();
+
+        if ($demolition != null) {
+
+            if ($demolition->user_id == $request->user()->id) {
+
+                $this->DemolitionController->change_status($request->demolition_id, 2);
+                return $this->sendResponse($demolition->toArray());
+
+            } else {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Unathorized user'
+                ], 403);
+            }
+
+        } else {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Demolitions dont fount'
+            ], 404);
+        }
+
+
+    }
+
+    public function quoteDemolition(Request $request)
+    {
+
+        $demolition = Demolition::where('id', $request->demolition_id)
+            ->with('answers')
+            ->with('images')
+            ->first();
+
+        if ($demolition != null) {
+
+            if ($demolition->status_id == 5) {
+
+                if ($demolition->user_id == $request->user()->id) {
+
+                    $this->DemolitionController->change_status($request->demolition_id, 4);
+                    return $this->sendResponse($demolition->toArray());
+
+                } else {
+                    return $this->sendError('Unathorized user', null, 403);
+                }
+
+            } else {
+                return $this->sendError('Demolition must be schedule', null, 403);
+            }
+
+        } else {
+            return $this->sendError('Demolitions dont fount', null, 404);
+        }
+
+    }
+
+
+    public function scheduleDemolition(Request $request)
+    {
+
+        $demolition = Demolition::where('id', $request->demolition_id)
+            ->with('answers')
+            ->with('images')
+            ->first();
+
+        if ($demolition != null) {
+
+            if ($demolition->status_id == 3) {
+
+                if ($demolition->user_id == $request->user()->id) {
+
+                    $this->DemolitionController->change_status($request->demolition_id, 5);
+
+                    return $this->sendResponse($demolition->toArray());
+
+                } else {
+                    return $this->sendError('Unathorized user', null, 403);
+                }
+
+            } else {
+                return $this->sendError('Demolition must be waiting for visit', null, 403);
+            }
+
+        } else {
+            return $this->sendError('Demolitions dont fount', null, 404);
+        }
+    }
+
+
+    public function store(Request $request)
+    {
+
+        $rules = [
+            // 'code'      => 'required|unique:demolitions',
+            'phoneUser' => 'required|numeric'
+        ];
+
+        $credentials = $request->only(
+
+            'phoneUser'
+        );
+
+        $validator = Validator::make($credentials, $rules);
+
+        if ($validator->fails()) {
+            return $this->sendError('Incorrect Data', $validator->errors(), 400);
+        }
+
+
+        $demolition = new Demolition();
+
+        // $demolition->code      = $request->code;
+        // $demolition->type     = $request->type;
+        $demolition->adress = $request->adress;
+        // $demolition->status    = '1';
+        $demolition->description = $request->description;//bcrypt($request->password);
+        $demolition->phoneUser = $request->phoneUser;
+        $demolition->comment = $request->comment;
+        $demolition->schedule = Carbon::createFromFormat('d-m-Y', $request->schedule);
+        $demolition->user_id = $request->user()->id;
+        $demolition->status_id = 1;
+        $demolition->save();
+
+        //answers
+
+        // dd();
+        // $id_questions[] = $request->id_question
+        if (count($request->types) != 0) {
+
+
+            for ($i = 0; $i < count($request->types); $i++) {
+                // dd($request);
+                $demType = new DemolitionType();
+
+                $demType->name = $request->types[$i];
+
+                $demType->demolition_id = $demolition->id;
+                $demType->save();
+            }
+        }
+
+
+        if (count($request->answers) != 0) {
+
+            // dd($request->answers);
+
+            foreach ($request->answers as $answer) {
+
+
+                $separator = explode(',', $answer, 2);
+                $idQuestion = $separator[0];
+                $respuesta = $separator[1];
+
+
+                $answer = new Answer();
+
+                $answer->answer = $respuesta;
+                $answer->question_id = $idQuestion;
+                $answer->demolition_id = $demolition->id;
+                $answer->save();
+            }
+
+        }
+
+
+        if ($request->file('images')) {
+
+            $files = $request->file('images');
+
+
+            for ($i = 0; $i < count($files); $i++) {
+                $now = Carbon::now()->timestamp;
+
+
+                $file = $files[$i];
+                $nameImg = 'demo_img_' . $demolition->id . '_' . $now . $i . '.' . $file->getClientOriginalExtension();
+                $path = public_path() . '/media/demolitions/img/';
+
+
+                $file->move($path, $nameImg);
+
+                $thumbnail = Image::make($path . $nameImg)->resize(200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                // dd($path);
+                $nameThumb = 'demolition_img_' . $demolition->id . '_' . $now . $i . '_thumb' . '.' . $file->getClientOriginalExtension();
+                $thumbnail->save($path . $nameThumb);
+
+                $image = new ImageModel();
+                $image->photo = '/media/demolitions/img/' . $nameImg;
+                $image->thumbnail = '/media/demolitions/img/' . $nameThumb;
+                $image->demolition_id = $demolition->id;
+                $image->save();
+            };
+        }
+
+        return $this->sendResponse(Demolition::IdDemolition(
+            $demolition->id
+        )
+            ->with('images')
+            ->with('answers')
+            ->with('types')
+            ->orderBy('created_at', 'DESC')
+            ->get());
+        // return $this->sendResponse($demolition->with('answers'));
+
+    }
+
+
+    public function show($id)
+    {
+        $demolition = Demolition::find($id);
+
+        if (is_null($demolition)) {
+            return $this->sendError('Demolition not found.');
+        }
+
+
+        return $this->sendResponse($demolition->toArray(), 'Demolition retrieved successfully.');
+    }
 }

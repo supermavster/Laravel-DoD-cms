@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Controller;
 
-use App\Models\User;
-use Illuminate\Http\Response;
+use App\Models\Demolition as DemolitionModel;
+use App\Models\User as UserModel;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
@@ -14,18 +15,26 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware('auth');
     }
 
     /**
      * Show the application dashboard.
      *
-     * @return Response
+     * @return Renderable
      */
     public function index()
     {
-        $users = User::all();
-        $demolitions = null;
+        $users = UserModel::orderBy('id', 'desc')->take(7)->get();
+
+        $demolitions = DemolitionModel::
+        orderBy('id',
+            'desc'
+        )
+            // ->with('user')
+            ->take(7)
+            ->get();
+        // dd($demolitions);
         return view('home', compact('users', 'demolitions'));
     }
 }
