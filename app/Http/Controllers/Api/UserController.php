@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Mail;
+use Validator;
+
+// use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends BaseController
 {
