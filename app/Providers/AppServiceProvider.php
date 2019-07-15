@@ -1,5 +1,7 @@
 <?php
 namespace App\Providers;
+
+use App\Console\Commands\ControllerMakeCommand;
 use App\Console\Commands\ModelMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
     /**
      * Register any application services.
      *
