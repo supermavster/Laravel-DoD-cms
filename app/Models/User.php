@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +31,7 @@ class User extends Authenticatable
     public function verifyUser()
     {
         // Un usuario tiene una verificación
-        return $this->hasOne('App\VerifyUser');
+        return $this->hasOne('App\Models\VerifyUser');
     }
 
 }
