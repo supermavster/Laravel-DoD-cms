@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Console\Commands\ModelMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Make Models
+        $this->app->extend('command.model.make', function ($command, $app) {
+            return new ModelMakeCommand($app['files']);
+        });
     }
 }
