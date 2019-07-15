@@ -11,6 +11,6 @@ class VerifyUser extends Model
     public function user()
     {
         // Una verificación pertenece a un usuario
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }
