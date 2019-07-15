@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('users', 'UserController@index')->name('users');
+
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 
 
