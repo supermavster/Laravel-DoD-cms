@@ -29,9 +29,9 @@ class CreatePaymentsTable extends Migration
                 ->references('id')->on('demolitions')
                 ->onDelete('cascade');
 
-            $table->integer('typePayment_id')->unsigned();
-            $table->foreign('typePayment_id')
-                ->references('id')->on('typePayments')
+            $table->integer('type_payment_id')->unsigned();
+            $table->foreign('type_payment_id')
+                ->references('id')->on('type_payments')
                 ->onDelete('cascade');
 
             $table->timestamps();

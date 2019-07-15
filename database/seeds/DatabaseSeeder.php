@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'type_payments'
         ]);
 
-        $this->call(DemolitionTypeSeeder::class);
+        $this->call(DemolitionTypesSeeder::class);
         $this->call(QuestionsSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(StatusSeeder::class);
