@@ -1,15 +1,20 @@
 <?php
 
-Route::post('create', 'PasswordResetController@create');
-Route::get('password/find/{token}', 'PasswordResetController@find');
-Route::post('reset', 'PasswordResetController@reset');
+Route::group(['namespace' => 'Controller'], function () {
 
-Route::get('payment_status', 'PaymentController@getPaymentStatus')->name('payment_status');
+    // Password
+    Route::post('create', 'PasswordResetController@create');
+    Route::get('password/find/{token}', 'PasswordResetController@find');
+    Route::post('reset', 'PasswordResetController@reset');
 
-Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
-    //create_payment
-    Route::post('payment', 'PaymentController@create_payment');
-    Route::post('refund', 'PaymentController@refund_deposit');
+    // Payment
+    Route::get('payment/status', 'PaymentController@getPaymentStatus')->name('payment_status');
+    // Auth Payment
+    Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
+        //create_payment
+        Route::post('payment', 'PaymentController@create_payment');
+        Route::post('refund', 'PaymentController@refund_deposit');
+    });
 });
 
 Route::group(['namespace' => 'Api'], function () {

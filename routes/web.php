@@ -14,7 +14,7 @@
 Auth::routes();
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
 
 Route::get('/register/verify/{code}', 'Api\UserController@verify');
 

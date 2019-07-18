@@ -3,9 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="mx-auto my-6">
+                <h1>Demo on Demand</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 mx-auto my-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Login</div>
+                    <div class="panel-heading">Login to your account</div>
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -48,9 +53,16 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-5">
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        Forgot Your Password?
+                                    </a>
+                                </div>
+                            </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col-md-6">
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox"
@@ -61,16 +73,13 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-max">
+                                        Sign in
                                     </button>
-
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Forgot Your Password?
-                                    </a>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

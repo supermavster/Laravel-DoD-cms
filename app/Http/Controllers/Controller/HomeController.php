@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Models\Demolition as DemolitionModel;
 use App\Models\User as UserModel;
 use Illuminate\Contracts\Support\Renderable;

@@ -71,7 +71,7 @@ class UserController extends BaseController
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users.email',
             'phone' => 'required',
             'companyName' => 'required',
             'password' => 'required',
@@ -133,9 +133,9 @@ class UserController extends BaseController
         }
 
         $user->save();
-        Mail::send('emails.confirmation_code', $user->toArray(), function ($message) use ($user) {
+        /*Mail::send('emails.confirmation_code', $user->toArray(), function ($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Por favor confirma tu correo');
-        });
+        });*/
 
 
         $success['message'] = "we send a link with your email confirmation";

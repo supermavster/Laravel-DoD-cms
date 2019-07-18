@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'companyName', 'companyAddress', 'phone', 'email', 'password', 'status', 'image', 'tumbnail'
+        'name', 'companyName', 'companyAddress', 'phone', 'email', 'password', 'status', 'image', 'tumbnail', 'rol_id'
     ];
 
     /**
@@ -40,12 +40,12 @@ class User extends Authenticatable
 
     public function demolitions()
     {
-        return $this->hasMany('App\Demolition');
+        return $this->hasMany('App\Models\Demolition');
     }
 
     public function notifications()
     {
-        return $this->hasMany('App\Notification');
+        return $this->hasMany('App\Models\Notification');
     }
 
     public function isAdmin()
