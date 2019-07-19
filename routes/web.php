@@ -47,6 +47,9 @@ Route::group(['namespace' => 'Controller'], function () {
     Route::get('images', 'DemolitionsController@home')->name('img');
     #
 
+    Route::get('notifications', 'NotificationController@index')->name('notifications');
+
+
 });
 
 Route::get('/redirect', function () {

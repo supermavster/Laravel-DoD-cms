@@ -59,6 +59,11 @@ class Demolition extends Model
         return $this->hasMany('App\Models\Payment');
     }
 
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\Notification');
+    }
+
 
     public function scopeFilter($query, $user_id, $status_id)
     {
