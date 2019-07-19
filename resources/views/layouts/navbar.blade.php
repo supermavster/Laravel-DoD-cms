@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                     <span class="navbar-text">
-                        Name Administrator
+                        {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
                     </span>
             </li>
         </ul>
@@ -42,8 +42,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item border text-center active">
-                <a class="nav-link" href="#">
+            <li class="nav-item border text-center">
+                <a class="nav-link" href="{{route('home')}}">
                         <span>
                             <i class="fas fa-home fa-2x"></i>
                             <br/>
@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="nav-item border text-center">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('users')}}">
                         <span>
                             <i class="fas fa-user-circle fa-2x"></i>
                             <br/>
@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li class="nav-item border text-center">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('demolitions')}}">
                         <span>
                             <i class="fas fa-scroll fa-2x"></i>
                             <br/>
@@ -70,7 +70,7 @@
                 </a>
             </li>
             <li class="nav-item border text-center">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('payments')}}">
                         <span>
                             <i class="fas fa-donate fa-2x"></i>
                             <br/>

@@ -19,20 +19,34 @@ Route::get('/', function () {
 Route::get('/register/verify/{code}', 'Api\UserController@verify');
 
 Route::group(['namespace' => 'Controller'], function () {
+
+    # Auth - Verify
     Route::get('resetPassword', 'PasswordResetController@reset')->name('reset.password');
 
+    # Home
     Route::get('home', 'HomeController@index')->name('home');
-    Route::get('demolition/{id}', 'DemolitionController@edit')->name('demolition.edit');
-    Route::get('users', 'UserController@index')->name('users');
-    Route::get('payments', 'PaymentController@index')->name('payment.index');
-    Route::get('edit/{id}', 'DemolitionController@edit')->name('editDemolition');
-    Route::get('edit/{id}', 'UserController@edit')->name('editUser');
-    Route::put('updateUser/{id}', 'UserController@update')->name('user.update');
-    Route::get('demolitions', 'DemolitionController@index')->name('demolitions.index');
-    Route::put('updateDemolition/{id}', 'DemolitionController@update')->name('demolitions.update');
 
-    Route::get('images', 'DemolitionController@home')->name('img');
+    # User
+    Route::get('users', 'UserController@index')->name('users');
     Route::get('user', 'UserController@create')->name('createUser');
+    Route::get('users/{id}', 'UserController@edit')->name('editUser');
+    Route::put('updateUser/{id}', 'UserController@update')->name('user.update');
+
+    # Payments
+    Route::get('payments', 'PaymentController@index')->name('payments');
+
+    # Demolition
+    Route::get('demolitions', 'DemolitionsController@index')->name('demolitions');
+
+    Route::get('demolitions/{demolition}/edit', 'DemolitionsController@edit')->name('demolitions.edit');
+    Route::put('demolitions/{demolition}', 'DemolitionsController@update');
+
+    Route::delete('demolitions/{demolition}', 'DemolitionsController@active')->name('demolitions.active');
+    Route::post('demolitions', 'DemolitionsController@store');
+
+    Route::get('images', 'DemolitionsController@home')->name('img');
+    #
+
 });
 
 Route::get('/redirect', function () {

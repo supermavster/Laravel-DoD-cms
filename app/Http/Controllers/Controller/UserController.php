@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $users = UserModel::all();
-        return view('user.index', compact('users'));
+        return view('pages.users', compact('users'));
     }
 
     /**

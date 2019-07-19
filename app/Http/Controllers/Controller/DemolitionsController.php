@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Controller;
 
-use App\Demolition;
 use App\Http\Controllers\Controller;
 use App\Models\Demolition as DemolitionModel;
 use App\Models\ScheduleDate;
@@ -103,7 +102,7 @@ class DemolitionsController extends Controller
     {
 
         $demolitions = DemolitionModel::all();
-        return view('demolition.index', compact('demolitions'));
+        return view('pages.demolitions', compact('demolitions'));
     }
 
 

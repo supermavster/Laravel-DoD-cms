@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Controller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Demolition as DemolitionModel;
+use App\Models\Payment;
 use App\Models\User as UserModel;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -26,16 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = UserModel::orderBy('id', 'desc')->take(7)->get();
+        $users = UserModel::orderBy('id', 'desc')->get();
+        $demolitions = DemolitionModel::orderBy('id', 'desc')->with('user')->get();
+        $payments = Payment::orderBy('id', 'desc')->get();
 
-        $demolitions = DemolitionModel::
-        orderBy('id',
-            'desc'
-        )
-            // ->with('user')
-            ->take(7)
-            ->get();
-        // dd($demolitions);
-        return view('home', compact('users', 'demolitions'));
+        return view('pages.home', compact('users', 'payments', 'demolitions'));
+
     }
 }

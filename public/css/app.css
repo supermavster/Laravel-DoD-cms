@@ -1,15 +1,22 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/* Buttons */
 
 .boxmain {
-  margin: 0;
-  padding: 0 0px;
+  margin: 2rem;
+  padding: 0 4rem 0 0;
   border-radius: initial;
+  width: auto;
 }
 
 .boxmain .box {
   top: 0;
-  padding: 15px;
+  margin: 0;
+  padding: 18px;
   border-radius: initial;
+}
+
+.boxmain a {
+  font-size: small;
+  color: white;
 }
 
 /* Table */
@@ -20,5 +27,42 @@ table thead {
 
 .btn-max {
   width: 100% !important;
+}
+
+.btn-requested {
+  background-color: #0BF37F;
+  border-color: #28a745;
+}
+
+.btn-wait-for-visit {
+  color: black;
+  background-color: #FFE97D;
+  border-color: #FFE97D;
+}
+
+.btn-quoted {
+  color: black;
+  background-color: #83E9F1;
+  border-color: #83E9F1;
+}
+
+.btn-scheduled {
+  background-color: #6797DE;
+  border-color: #6797DE;
+}
+
+.btn-attended {
+  background-color: #D78BF2;
+  border-color: #D78BF2;
+}
+
+.btn-paid-out {
+  background-color: #ECA12F;
+  border-color: #ECA12F;
+}
+
+.btn-cancel {
+  background-color: #F30B3A;
+  border-color: #F30B3A;
 }
 

@@ -22,7 +22,7 @@
 
 
 @include('layouts.navbar')
-<div class="container">
+<div class="container col-md-11 mx-auto my-5">
     @yield('content')
 </div>
 

@@ -39,21 +39,15 @@ class PaymentController extends Controller
                 $clientSecret
             )
         );
-
         // $this->apiContext = Paypalpayment::ApiContext($this->clientId, $this->clientSecret);
-
-        $this->DemolitionController = app('App\Http\Controllers\DemolitionController');
-
-
+        $this->DemolitionController = app('App\Http\Controllers\Controller\DemolitionsController');
     }
 
 
     public function index(Request $request)
     {
         $payments = PaymenModel::all();
-
-        return view('payment.index', compact('payments'));
-
+        return view('pages.payments', compact('payments'));
     }
 
     /*PAYPAL FUNCTIONS*/
