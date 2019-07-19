@@ -5,7 +5,6 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- Content User -->
             <div class="card">
-                <h5 class="card-header">Last Registered users</h5>
                 <div class="card-body">
                     <table class="table text-center">
                         <thead>

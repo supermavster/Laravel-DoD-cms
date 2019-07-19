@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Notification');
     }
 
+    public function advertisers()
+    {
+        return $this->hasMany('App\Models\Advertiser');
+    }
+
     public function isAdmin()
     {
         $user = Auth::user();

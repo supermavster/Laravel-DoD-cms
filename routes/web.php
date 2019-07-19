@@ -49,7 +49,9 @@ Route::group(['namespace' => 'Controller'], function () {
 
     Route::get('notifications', 'NotificationController@index')->name('notifications');
 
+    Route::get('questions', 'QuestionController@index')->name('questions');
 
+    Route::get('advertisers', 'AdvertiserController@index')->name('advertisers');
 });
 
 Route::get('/redirect', function () {

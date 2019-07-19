@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Advertiser extends Model
 {
     //
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'created_by')//->withTimestamps()
+            ;
+    }
 }

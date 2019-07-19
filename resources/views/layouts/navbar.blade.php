@@ -88,7 +88,7 @@
                 </a>
             </li>
             <li class="nav-item border text-center">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('questions')}}">
                         <span>
                             <i class="fas fa-question fa-2x"></i>
                             <br/>
@@ -97,7 +97,7 @@
                 </a>
             </li>
             <li class="nav-item border text-center">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('advertisers')}}">
                         <span>
                             <i class="fas fa-shopping-cart fa-2x"></i>
                             <br/>
