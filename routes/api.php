@@ -14,7 +14,10 @@ Route::group(['namespace' => 'Api'], function () {
     // Route::post('reset', 'ApiPasswordResetController@reset');
     Route::get('settings', 'SettingController@index');
 
-    Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
+    Route::group([
+        'prefix' => 'user',
+        'middleware' => 'auth:api',
+    ], function () {
         Route::get('demolitions', 'DemolitionController@index');
 
         Route::get('demolition', 'DemolitionController@demolitionDescription');

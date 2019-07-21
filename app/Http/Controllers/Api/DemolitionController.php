@@ -18,7 +18,7 @@ class DemolitionController extends BaseController
 
     public function __construct()
     {
-        $this->DemolitionController = app('App\Http\Controllers\DemolitionController');
+        $this->DemolitionController = app('App\Http\Controllers\Controller\DemolitionsController');
     }
 
 
@@ -37,7 +37,6 @@ class DemolitionController extends BaseController
         } else {
             return $this->sendError('Demolitions dont found', null, 404);
         }
-
     }
 
 
@@ -48,8 +47,7 @@ class DemolitionController extends BaseController
 
         if ($status != null) {
             // dd($request->user()->id);
-            $demolitions = Demolition::
-            filter(
+            $demolitions = Demolition::filter(
                 $request->user()->id,
                 $status->id
             )
@@ -66,12 +64,9 @@ class DemolitionController extends BaseController
 
                 return $this->sendError('Demolitions dont found', null, 404);
             }
-
-
         } else {
             return $this->sendError('Status dont found', null, 400);
         }
-
     }
 
     /**
@@ -96,22 +91,18 @@ class DemolitionController extends BaseController
 
                 $this->DemolitionController->change_status($request->demolition_id, 2);
                 return $this->sendResponse($demolition->toArray());
-
             } else {
                 return response()->json([
                     'status' => 'fail',
                     'message' => 'Unathorized user'
                 ], 403);
             }
-
         } else {
             return response()->json([
                 'status' => 'fail',
                 'message' => 'Demolitions dont fount'
             ], 404);
         }
-
-
     }
 
     public function quoteDemolition(Request $request)
@@ -130,19 +121,15 @@ class DemolitionController extends BaseController
 
                     $this->DemolitionController->change_status($request->demolition_id, 4);
                     return $this->sendResponse($demolition->toArray());
-
                 } else {
                     return $this->sendError('Unathorized user', null, 403);
                 }
-
             } else {
                 return $this->sendError('Demolition must be schedule', null, 403);
             }
-
         } else {
             return $this->sendError('Demolitions dont fount', null, 404);
         }
-
     }
 
 
@@ -163,15 +150,12 @@ class DemolitionController extends BaseController
                     $this->DemolitionController->change_status($request->demolition_id, 5);
 
                     return $this->sendResponse($demolition->toArray());
-
                 } else {
                     return $this->sendError('Unathorized user', null, 403);
                 }
-
             } else {
                 return $this->sendError('Demolition must be waiting for visit', null, 403);
             }
-
         } else {
             return $this->sendError('Demolitions dont fount', null, 404);
         }
@@ -204,7 +188,7 @@ class DemolitionController extends BaseController
         // $demolition->type     = $request->type;
         $demolition->adress = $request->adress;
         // $demolition->status    = '1';
-        $demolition->description = $request->description;//bcrypt($request->password);
+        $demolition->description = $request->description; //bcrypt($request->password);
         $demolition->phoneUser = $request->phoneUser;
         $demolition->comment = $request->comment;
         $demolition->schedule = Carbon::createFromFormat('d-m-Y', $request->schedule);
@@ -250,7 +234,6 @@ class DemolitionController extends BaseController
                 $answer->demolition_id = $demolition->id;
                 $answer->save();
             }
-
         }
 
 
