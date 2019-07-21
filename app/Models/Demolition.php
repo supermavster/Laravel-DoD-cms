@@ -14,7 +14,8 @@ class Demolition extends Model
         'description',
         'phoneUser',
         'comment',
-        'schedule'
+        'schedule',
+        'updated_at'
         // 'user_id'
     ];
 

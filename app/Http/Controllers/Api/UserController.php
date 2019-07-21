@@ -125,6 +125,12 @@ class UserController extends BaseController
 
             $user->image = 'demo_on_demand/public/media/user/img/' . $nameImg;
             $user->thumbnail = 'demo_on_demand/public/media/user/img/' . $nameThumb;
+        }
+
+
+        if ($request->role_id) {
+            $user->role_id = $request->role_id;
+        } else {
             $user->role_id = 2;
         }
 
@@ -244,10 +250,14 @@ class UserController extends BaseController
                 $user->image = 'demo_on_demand/public/media/user/img/' . $nameImg;
                 $user->thumbnail = 'demo_on_demand/public/media/user/img/' . $nameThumb;
 
-
                 // $user->save();
             }
 
+            if ($request->role_id) {
+                $user->role_id = $request->role_id;
+            } else {
+                $user->role_id = 2;
+            }
 
             $user->update();
 

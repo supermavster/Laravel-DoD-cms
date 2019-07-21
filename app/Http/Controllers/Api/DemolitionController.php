@@ -173,12 +173,24 @@ class DemolitionController extends BaseController
 
         $rules = [
             // 'code'      => 'required|unique:demolitions',
+            // 'type'      => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'phoneUser' => 'required',
+            'comment' => 'required',
+            'schedule' => 'required',
             'phoneUser' => 'required|numeric'
         ];
 
         $credentials = $request->only(
 
-            'phoneUser'
+            'address',
+            'description',
+            'phoneUser',
+            'comment',
+            'schedule'
+            //'type',
+            //'code',
         );
 
         $validator = Validator::make($credentials, $rules);
@@ -192,7 +204,7 @@ class DemolitionController extends BaseController
 
         // $demolition->code      = $request->code;
         // $demolition->type     = $request->type;
-        $demolition->adress = $request->adress;
+        $demolition->address = $request->address;
         // $demolition->status    = '1';
         $demolition->description = $request->description; //bcrypt($request->password);
         $demolition->phoneUser = $request->phoneUser;
@@ -206,7 +218,7 @@ class DemolitionController extends BaseController
 
         // dd();
         // $id_questions[] = $request->id_question
-        if (count($request->types) != 0) {
+        if (isset($request->types) && count($request->types) != 0) {
 
 
             for ($i = 0; $i < count($request->types); $i++) {
@@ -221,7 +233,7 @@ class DemolitionController extends BaseController
         }
 
 
-        if (count($request->answers) != 0) {
+        if (isset($request->answers) && count($request->answers) != 0) {
 
             // dd($request->answers);
 

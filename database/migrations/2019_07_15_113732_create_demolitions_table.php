@@ -34,6 +34,8 @@ class CreateDemolitionsTable extends Migration
             $table->foreign('status_id')
                 ->references('id')->on('status')
                 ->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
