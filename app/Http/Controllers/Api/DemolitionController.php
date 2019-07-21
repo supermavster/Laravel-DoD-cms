@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Answer;
-use App\Models\Demolition;
-use App\Models\DemolitionType;
-use App\Models\Image as ImageModel;
-use App\Models\Status;
 use Carbon\Carbon;
+use App\Models\Answer;
+use App\Models\Status;
+use App\Models\Demolition;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\DemolitionType;
+use App\Models\Image as ImageModel;
 use Intervention\Image\Facades\Image;
+use App\Http\Controllers\Api\BaseController;
+use Validator;
 
 class DemolitionController extends BaseController
 {
@@ -22,8 +24,12 @@ class DemolitionController extends BaseController
     }
 
 
-    public function demolitionDescription(Request $request)
+    public function demolitionDescription(Request $request, $id)
     {
+
+        if (!$id) {
+            return $this->sendError('Incorrect Data', 'The id is need', 400);
+        }
 
         $demolition = Demolition::where('id', $request->id)
             ->with('types')

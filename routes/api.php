@@ -18,9 +18,9 @@ Route::group(['namespace' => 'Api'], function () {
         'prefix' => 'user',
         'middleware' => 'auth:api',
     ], function () {
-        Route::get('demolitions', 'DemolitionController@index');
 
-        Route::get('demolition', 'DemolitionController@demolitionDescription');
+        Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
+        Route::get('demolitions', 'DemolitionController@index');
 
         Route::get('payments', 'PaymentController@index');
 
