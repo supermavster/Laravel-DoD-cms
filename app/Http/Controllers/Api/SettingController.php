@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Advertiser;
 use App\Models\Question;
-use App\Models\TypesDemolition;
+use App\Models\Advertiser;
+use App\Models\Demolition;
 use Illuminate\Http\Response;
+use App\Models\TypeDemolition;
+use App\Http\Controllers\Api\BaseController;
 
 class SettingController extends BaseController
 {
@@ -16,8 +18,9 @@ class SettingController extends BaseController
      */
     public function index()
     {
+        // Get Data Base
         $questions = Question::all();
-        $types = TypesDemolition::all();
+        $types = TypeDemolition::all();
         $publicies = Advertiser::all('id', 'title', 'url', 'image', 'thumbnail');
         // filter(
         //     $request->user()->id

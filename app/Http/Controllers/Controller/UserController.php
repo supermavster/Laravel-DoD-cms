@@ -2,15 +2,37 @@
 
 namespace App\Http\Controllers\Controller;
 
-use App\Http\Controllers\Controller;
-use App\Models\User as UserModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\User as UserModel;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
+    function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('pages.home');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +57,6 @@ class UserController extends Controller
             // dd($user);
             return view('user.edit', compact('user'));
         }
-
     }
 
     /**
@@ -56,7 +77,7 @@ class UserController extends Controller
             $user->status = $request->has('status') ? $request->status : $user->status;
             $user->companyAddress = $request->has('addressCompany') ? $request->addressCompany : $user->companyAddress;
 
-// dd($request);
+            // dd($request);
 
             if ($request->file('image')) {
 

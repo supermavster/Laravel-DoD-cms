@@ -16,11 +16,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('verify/{code}', 'Api\UserController@verify');
 
 Route::group(['namespace' => 'Controller'], function () {
 
     # Auth - Verify
+    Route::post('login', 'UserController@authenticate')->name('login');
     Route::get('resetPassword', 'PasswordResetController@reset')->name('reset.password');
 
     # Home
@@ -80,13 +83,3 @@ Route::get('/callback', function (Request $request) {
 
     return json_decode((string) $response->getBody(), true);
 });
-
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
