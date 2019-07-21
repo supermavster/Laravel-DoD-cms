@@ -5,7 +5,6 @@
   border-radius: initial;
   width: auto;
 
-
   .box {
     top: 0;
     margin: 0;
@@ -27,46 +26,44 @@ table {
 }
 
 .btn {
-
   &-max {
     width: 100% !important;
   }
 
   &-requested {
-    background-color: #0BF37F;
+    background-color: #0bf37f;
     border-color: #28a745;
   }
 
   &-wait-for-visit {
     color: black;
-    background-color: #FFE97D;
-    border-color: #FFE97D;
+    background-color: #ffe97d;
+    border-color: #ffe97d;
   }
 
   &-quoted {
     color: black;
-    background-color: #83E9F1;
-    border-color: #83E9F1;
+    background-color: #83e9f1;
+    border-color: #83e9f1;
   }
 
   &-scheduled {
-    background-color: #6797DE;
-    border-color: #6797DE;
+    background-color: #6797de;
+    border-color: #6797de;
   }
 
   &-attended {
-    background-color: #D78BF2;
-    border-color: #D78BF2;
+    background-color: #d78bf2;
+    border-color: #d78bf2;
   }
 
   &-paid-out {
-    background-color: #ECA12F;
-    border-color: #ECA12F;
+    background-color: #eca12f;
+    border-color: #eca12f;
   }
 
   &-cancel {
-    background-color: #F30B3A;
-    border-color: #F30B3A;
+    background-color: #f30b3a;
+    border-color: #f30b3a;
   }
 }
-
