@@ -14,14 +14,14 @@ class StatusSeeder extends Seeder
     {
         DB::table('status')->insert([
             'id' => 1,
-            'name' => 'solicitada',
+            'name' => 'Requested',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
         DB::table('status')->insert([
             'id' => 2,
-            'name' => 'cancelada',
+            'name' => 'Wait For Visit',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -29,7 +29,7 @@ class StatusSeeder extends Seeder
 
         DB::table('status')->insert([
             'id' => 3,
-            'name' => 'espera de visita',
+            'name' => 'Quoted',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -37,21 +37,21 @@ class StatusSeeder extends Seeder
 
         DB::table('status')->insert([
             'id' => 4,
-            'name' => 'cotizado',
+            'name' => 'Scheduled',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
         DB::table('status')->insert([
             'id' => 5,
-            'name' => 'agendado',
+            'name' => 'Attended',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
         DB::table('status')->insert([
             'id' => 6,
-            'name' => 'atendido',
+            'name' => 'Paid Out',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -59,7 +59,7 @@ class StatusSeeder extends Seeder
 
         DB::table('status')->insert([
             'id' => 7,
-            'name' => 'pagado',
+            'name' => 'Cancel',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

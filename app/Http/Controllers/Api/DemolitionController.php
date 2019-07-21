@@ -205,13 +205,20 @@ class DemolitionController extends BaseController
         // $demolition->code      = $request->code;
         // $demolition->type     = $request->type;
         $demolition->address = $request->address;
-        // $demolition->status    = '1';
         $demolition->description = $request->description; //bcrypt($request->password);
         $demolition->phoneUser = $request->phoneUser;
         $demolition->comment = $request->comment;
+        // Payment
+        $demolition->subtotal = $request->subtotal;
+        $demolition->deposit_percentage = $request->deposit_percentage;
+        $demolition->payment = $request->payment;
+        $demolition->deposit = $request->deposit;
+        // Date
         $demolition->schedule = Carbon::createFromFormat('d-m-Y', $request->schedule);
+        // Foring
         $demolition->user_id = $request->user()->id;
-        $demolition->status_id = 1;
+        $demolition->status_id = $request->status_id;
+
         $demolition->save();
 
         //answers
@@ -219,14 +226,9 @@ class DemolitionController extends BaseController
         // dd();
         // $id_questions[] = $request->id_question
         if (isset($request->types) && count($request->types) != 0) {
-
-
             for ($i = 0; $i < count($request->types); $i++) {
-                // dd($request);
                 $demType = new DemolitionType();
-
                 $demType->name = $request->types[$i];
-
                 $demType->demolition_id = $demolition->id;
                 $demType->save();
             }
@@ -259,32 +261,33 @@ class DemolitionController extends BaseController
 
             $files = $request->file('images');
 
-
-            for ($i = 0; $i < count($files); $i++) {
-                $now = Carbon::now()->timestamp;
-
-
-                $file = $files[$i];
-                $nameImg = 'demo_img_' . $demolition->id . '_' . $now . $i . '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/media/demolitions/img/';
+            if (count($files) <= 5) {
+                for ($i = 0; $i < count($files); $i++) {
+                    $now = Carbon::now()->timestamp;
 
 
-                $file->move($path, $nameImg);
+                    $file = $files[$i];
+                    $nameImg = 'demo_img_' . $demolition->id . '_' . $now . $i . '.' . $file->getClientOriginalExtension();
+                    $path = public_path() . '/media/demolitions/img/';
 
-                $thumbnail = Image::make($path . $nameImg)->resize(200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
 
-                // dd($path);
-                $nameThumb = 'demolition_img_' . $demolition->id . '_' . $now . $i . '_thumb' . '.' . $file->getClientOriginalExtension();
-                $thumbnail->save($path . $nameThumb);
+                    $file->move($path, $nameImg);
 
-                $image = new ImageModel();
-                $image->photo = '/media/demolitions/img/' . $nameImg;
-                $image->thumbnail = '/media/demolitions/img/' . $nameThumb;
-                $image->demolition_id = $demolition->id;
-                $image->save();
-            };
+                    $thumbnail = Image::make($path . $nameImg)->resize(200, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    // dd($path);
+                    $nameThumb = 'demolition_img_' . $demolition->id . '_' . $now . $i . '_thumb' . '.' . $file->getClientOriginalExtension();
+                    $thumbnail->save($path . $nameThumb);
+
+                    $image = new ImageModel();
+                    $image->photo = '/media/demolitions/img/' . $nameImg;
+                    $image->thumbnail = '/media/demolitions/img/' . $nameThumb;
+                    $image->demolition_id = $demolition->id;
+                    $image->save();
+                };
+            }
         }
 
         return $this->sendResponse(Demolition::IdDemolition(
