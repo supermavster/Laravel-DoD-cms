@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
-Route::get('/register/verify/{code}', 'Api\UserController@verify');
+Route::get('verify/{code}', 'Api\UserController@verify');
 
 Route::group(['namespace' => 'Controller'], function () {
 
@@ -78,7 +78,7 @@ Route::get('/callback', function (Request $request) {
         ],
     ]);
 
-    return json_decode((string)$response->getBody(), true);
+    return json_decode((string) $response->getBody(), true);
 });
 
 

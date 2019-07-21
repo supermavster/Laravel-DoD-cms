@@ -27,7 +27,6 @@ class UserController extends BaseController
             'phone' => $request->user()->phone,
             'email' => $request->user()->email
         ], 200);
-
     }
 
 
@@ -40,12 +39,9 @@ class UserController extends BaseController
 
             $request->user()->password = $user->password;
             return $this->sendResponse($user->toArray());
-
         } else {
             return $this->sendError("Passwords aren't equals", null, 403);
         }
-
-
     }
 
     public function verify($code)
@@ -53,7 +49,7 @@ class UserController extends BaseController
         $user = User::where('confirmation_code', $code)->first();
 
         if (!$user) {
-            return $this->sendError("email Invalid", null, 403);
+            return $this->sendError("Email Invalid", null, 403);
         }
 
         $user->confirmed = true;
@@ -62,7 +58,7 @@ class UserController extends BaseController
 
         return response()->json([
             'status' => 'success',
-            'message' => 'email confirmed'
+            'message' => 'Email confirmed'
         ], 200);
     }
 
@@ -86,19 +82,19 @@ class UserController extends BaseController
             'companyName',
             'companyAddress'
         );
-        
+
         $validator = Validator::make($credentials, $rules);
-        
+
         if ($validator->fails()) {
             return $this->sendError('Incorrect Data', $validator->errors()->all(), 400);
         }
-        
+
         $user = new User();
-        
+
         // Add data base
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone = $request->phone;//bcrypt($request->password);
+        $user->phone = $request->phone; //bcrypt($request->password);
         $user->companyName = $request->companyName;
         $user->companyAddress = $request->companyAddress;
         $user->status = 'active';
@@ -130,14 +126,11 @@ class UserController extends BaseController
             $user->image = 'demo_on_demand/public/media/user/img/' . $nameImg;
             $user->thumbnail = 'demo_on_demand/public/media/user/img/' . $nameThumb;
             $user->role_id = 2;
-
         }
 
-        $user->save();
-        /*Mail::send('emails.confirmation_code', $user->toArray(), function ($message) use ($user) {
+        Mail::send('emails.confirmation_code', $user->toArray(), function ($message) use ($user) {
             $message->to($user->email, $user->name)->subject('Por favor confirma tu correo');
-        });*/
-
+        });
 
         $success['message'] = "we send a link with your email confirmation";
         $success['name'] = $user->name;
@@ -146,6 +139,7 @@ class UserController extends BaseController
         $success['thumbnail'] = $user->thumbnail;
         $success['token'] = $user->createToken('MyApp')->accessToken;
 
+        $user->save();
 
         return $this->sendResponse($success);
     }
@@ -174,14 +168,11 @@ class UserController extends BaseController
                     'token' => $token
 
                 ], 200);
-
             } else {
                 return response()->json([
                     'error' => 'You address email not is confirmed'
                 ], 403);
             }
-
-
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -206,7 +197,6 @@ class UserController extends BaseController
             'status' => 'loguot'
 
         ], 403);
-
     }
 
 
@@ -268,6 +258,5 @@ class UserController extends BaseController
 
             return $this->sendError('Unauthorized user', null, 403);
         }
-
     }
 }
