@@ -207,8 +207,8 @@ class UserController extends BaseController
         if ($user != null) {
             // $user->image = $request->image
             $user->name = $request->name;
-            $user->companyName = $request->nameCompany;
-            $user->companyAddress = $request->addressCompany;
+            $user->companyName = $request->companyName;
+            $user->companyAddress = $request->companyAddress;
             $user->phone = $request->phone;
             $user->email = $request->email;
 
@@ -242,12 +242,12 @@ class UserController extends BaseController
             }
 
 
-            $user->save();
+            $user->update();
 
             // $request->user()->image = $request->image
             $request->user()->name = $request->name;
-            $request->user()->companyName = $request->nameCompany;
-            $request->user()->companyAddress = $request->addressCompany;
+            $request->user()->companyName = $request->companyName;
+            $request->user()->companyAddress = $request->companyAddress;
             $request->user()->phone = $request->phone;
             $request->user()->email = $request->email;
             $request->user()->image = $user->image;
