@@ -171,9 +171,25 @@ class DemolitionController extends BaseController
     public function store(Request $request)
     {
 
+
+        /**
+         * Data:
+         * 
+         * address:Calle falsa 123
+         * description:To Do
+         * phoneUser:3211231234
+         * comment:To Remove
+         * schedule:28-01-2015
+         * status_id:1
+         * subtotal:50
+         * deposit_percentage:15
+         * payment:100
+         * deposit:51
+         * answers[0]:1,Tres Tristes Tigres
+         * types[0]:Request
+         */
+
         $rules = [
-            // 'code'      => 'required|unique:demolitions',
-            // 'type'      => 'required',
             'address' => 'required',
             'description' => 'required',
             'phoneUser' => 'required',
@@ -189,8 +205,6 @@ class DemolitionController extends BaseController
             'phoneUser',
             'comment',
             'schedule'
-            //'type',
-            //'code',
         );
 
         $validator = Validator::make($credentials, $rules);
