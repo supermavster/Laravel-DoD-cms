@@ -25,16 +25,6 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('changePassword', 'UserController@changePassword');
         Route::get('logout', 'UserController@logout');
 
-        # Demolitions data
-        Route::get('demolitions', 'DemolitionController@index');
-        Route::post('demolitions', 'DemolitionController@store')->name('demolitions.create');
-
-        Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
-        Route::post('demolition/cancel', 'DemolitionController@cancelDemolition');
-        Route::post('schedule', 'DemolitionController@scheduleDemolition');
-        Route::post('quote', 'DemolitionController@quoteDemolition');
-        Route::post('quote', 'DemolitionController@quoteDemolition');
-
         # Answere
         Route::post('answers', 'AnswerController@store');
 
@@ -42,6 +32,21 @@ Route::group(['namespace' => 'Api'], function () {
         //reset Password
         // Route::get('find/{token}', 'PasswordResetController@find');
         // Route::post('reset', 'PasswordResetController@reset');
+    });
+
+
+    Route::group([
+        'prefix' => 'demolition',
+        'middleware' => 'auth:api',
+    ], function () {
+        # Demolitions data
+        Route::get('/', 'DemolitionController@index');
+        Route::post('/', 'DemolitionController@store')->name('demolitions.create');
+
+        Route::get('{id}', 'DemolitionController@demolitionDescription');
+        Route::post('cancel', 'DemolitionController@cancelDemolition');
+        Route::post('schedule', 'DemolitionController@scheduleDemolition');
+        Route::post('quote', 'DemolitionController@quoteDemolition');
     });
 });
 

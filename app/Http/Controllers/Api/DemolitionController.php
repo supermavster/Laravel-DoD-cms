@@ -76,96 +76,102 @@ class DemolitionController extends BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
+     * States Of Demolition
      * @return Response
      */
 
 
-    public function cancelDemolition(Request $request)
+    public function waitForVisitDemolition(Request $request)
     {
-
-        $demolition = Demolition::where('id', $request->demolition_id)
-            ->with('answers')
-            ->with('images')
-            ->first();
-
-        if ($demolition != null) {
-
-            if ($demolition->user_id == $request->user()->id) {
-
-                $this->DemolitionController->change_status($request->demolition_id, 2);
-                return $this->sendResponse($demolition->toArray());
-            } else {
-                return response()->json([
-                    'status' => 'fail',
-                    'message' => 'Unathorized user'
-                ], 403);
-            }
-        } else {
-            return response()->json([
-                'status' => 'fail',
-                'message' => 'Demolitions dont fount'
-            ], 404);
-        }
+        $lastState = [
+            'state' => 1,
+            'message' => 'request',
+            'newState' => 2
+        ];
+        return self::baseStateDemolotion($request, $lastState);
     }
+
 
     public function quoteDemolition(Request $request)
     {
-
-        $demolition = Demolition::where('id', $request->demolition_id)
-            ->with('answers')
-            ->with('images')
-            ->first();
-
-        if ($demolition != null) {
-
-            if ($demolition->status_id == 5) {
-
-                if ($demolition->user_id == $request->user()->id) {
-
-                    $this->DemolitionController->change_status($request->demolition_id, 4);
-                    return $this->sendResponse($demolition->toArray());
-                } else {
-                    return $this->sendError('Unathorized user', null, 403);
-                }
-            } else {
-                return $this->sendError('Demolition must be schedule', null, 403);
-            }
-        } else {
-            return $this->sendError('Demolitions dont fount', null, 404);
-        }
+        $lastState = [
+            'state' => 2,
+            'message' => 'visit',
+            'newState' => 3
+        ];
+        return self::baseStateDemolotion($request, $lastState);
     }
-
 
     public function scheduleDemolition(Request $request)
     {
 
+        $lastState = [
+            'state' => 3,
+            'message' => 'quoted',
+            'newState' => 4
+        ];
+        return self::baseStateDemolotion($request, $lastState);
+    }
+
+    public function attendedDemolition(Request $request)
+    {
+
+        $lastState = [
+            'state' => 4,
+            'message' => 'scheduled',
+            'newState' => 5
+        ];
+        return self::baseStateDemolotion($request, $lastState);
+    }
+
+    public function paidOutDemolition(Request $request)
+    {
+
+        $lastState = [
+            'state' => 5,
+            'message' => 'attended',
+            'newState' => 6
+        ];
+        return self::baseStateDemolotion($request, $lastState);
+    }
+
+    public function cancelDemolition(Request $request)
+    {
+        // Overwrite
+        $lastState = [
+            'newState' => 7
+        ];
+        return self::baseStateDemolotion($request, $lastState);
+    }
+
+    public function baseStateDemolotion(Request $request, $lastState)
+    {
+
         $demolition = Demolition::where('id', $request->demolition_id)
             ->with('answers')
             ->with('images')
             ->first();
 
         if ($demolition != null) {
-
-            if ($demolition->status_id == 3) {
-
-                if ($demolition->user_id == $request->user()->id) {
-
-                    $this->DemolitionController->change_status($request->demolition_id, 5);
-
-                    return $this->sendResponse($demolition->toArray());
-                } else {
-                    return $this->sendError('Unathorized user', null, 403);
+            if (isset($lastState['state'])) {
+                if ($demolition->status_id !== $lastState['state']) {
+                    return $this->sendError('Demolition must be waiting for ' . $lastState['message'], null, 403);
                 }
+            }
+
+            if ($demolition->user_id == $request->user()->id) {
+
+                $this->DemolitionController->change_status($request->demolition_id, $lastState['newState']);
+
+                return $this->sendResponse($demolition->toArray());
             } else {
-                return $this->sendError('Demolition must be waiting for visit', null, 403);
+                return $this->sendError('Unathorized user', null, 403);
             }
         } else {
             return $this->sendError('Demolitions dont fount', null, 404);
         }
     }
+
 
 
     public function store(Request $request)
