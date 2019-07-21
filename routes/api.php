@@ -30,7 +30,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('demolitions', 'DemolitionController@store')->name('demolitions.create');
 
         Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
-        Route::post('cancel', 'DemolitionController@cancelDemolition');
+        Route::post('demolition/cancel', 'DemolitionController@cancelDemolition');
         Route::post('schedule', 'DemolitionController@scheduleDemolition');
         Route::post('quote', 'DemolitionController@quoteDemolition');
         Route::post('quote', 'DemolitionController@quoteDemolition');

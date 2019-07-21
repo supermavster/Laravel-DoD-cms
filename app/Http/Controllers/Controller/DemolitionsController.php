@@ -81,16 +81,11 @@ class DemolitionsController extends Controller
                     $scheduleDate->demolition_id = $request->id;
                     $scheduleDate->save();
                 }
-
-
             }
 
             $demolition->save();
             return redirect()->route('demolitions.index');
-        } else {
-
-        }
-
+        } else { }
     }
 
     /**
@@ -114,7 +109,6 @@ class DemolitionsController extends Controller
 
         $demolition->status_id = $status_id;
 
-        $demolition->save();
-
+        $demolition->update();
     }
 }
