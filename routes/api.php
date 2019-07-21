@@ -26,8 +26,9 @@ Route::group(['namespace' => 'Api'], function () {
         # Data Profile
         Route::get('profile', 'UserController@profile');
         Route::post('update', 'UserController@update');
-        Route::post('logout', 'UserController@logout');
         Route::post('changePassword', 'UserController@changePassword');
+        Route::post('logout', 'UserController@logout');
+
 
         Route::post('cancel', 'DemolitionController@cancelDemolition');
         Route::post('schedule', 'DemolitionController@scheduleDemolition');
