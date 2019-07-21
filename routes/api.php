@@ -19,12 +19,11 @@ Route::group(['namespace' => 'Api'], function () {
         'middleware' => 'auth:api',
     ], function () {
 
+        # Demolitions data
         Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
         Route::get('demolitions', 'DemolitionController@index');
 
-        Route::get('payments', 'PaymentController@index');
-
-
+        # Data Profile
         Route::get('profile', 'UserController@profile');
         Route::post('update', 'UserController@update');
         Route::post('logout', 'UserController@logout');
@@ -58,6 +57,8 @@ Route::group(['namespace' => 'Controller'], function () {
     // Auth Payment
     Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
         //create_payment
+        # Payments
+        Route::get('payments', 'PaymentController@index');
         Route::post('payment', 'PaymentController@create_payment');
         Route::post('refund', 'PaymentController@refund_deposit');
     });
