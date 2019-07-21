@@ -19,8 +19,8 @@ class CreatePaymentsTable extends Migration
             $table->string('mean_payment');
             $table->string('sale_id');
             $table->string('total');
-            $table->timestamp('started_at');
-            $table->timestamp('end_at');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->string('status');
             $table->decimal('refund_price')->nullable();
 

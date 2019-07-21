@@ -19,9 +19,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-
-
-@include('layouts.navbar')
+@auth
+    @include('layouts.navbar')
+@endauth
 <div class="container col-md-11 mx-auto my-5">
     @yield('content')
 </div>
@@ -30,3 +30,4 @@
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
+p

@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                     <span class="navbar-text">
-                        {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+                            {{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email}}}
                     </span>
             </li>
         </ul>
