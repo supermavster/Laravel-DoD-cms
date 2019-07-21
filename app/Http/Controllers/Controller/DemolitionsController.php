@@ -105,10 +105,8 @@ class DemolitionsController extends Controller
     {
 
         $demolition = DemolitionModel::findOrFail($demolition_id);
-
-
         $demolition->status_id = $status_id;
-
         $demolition->update();
+        return $demolition;
     }
 }

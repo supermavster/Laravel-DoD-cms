@@ -144,6 +144,7 @@ class DemolitionController extends BaseController
         return self::baseStateDemolotion($request, $lastState);
     }
 
+
     public function baseStateDemolotion(Request $request, $lastState)
     {
 
@@ -161,7 +162,7 @@ class DemolitionController extends BaseController
 
             if ($demolition->user_id == $request->user()->id) {
 
-                $this->DemolitionController->change_status($request->demolition_id, $lastState['newState']);
+                $demolition = $this->DemolitionController->change_status($request->demolition_id, $lastState['newState']);
 
                 return $this->sendResponse($demolition->toArray());
             } else {

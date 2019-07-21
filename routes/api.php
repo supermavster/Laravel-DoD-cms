@@ -4,7 +4,10 @@
  * API Rest - Demond on Demand
  */
 
-Route::group(['namespace' => 'Api'], function () {
+Route::group([
+    'namespace' => 'Api',
+    'middleware' => 'auth:api'
+], function () {
 
     //  Auth User
     Route::post('register', 'UserController@register');
@@ -16,7 +19,6 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::group([
         'prefix' => 'user',
-        'middleware' => 'auth:api',
     ], function () {
 
         # Data Profile
@@ -37,16 +39,19 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::group([
         'prefix' => 'demolition',
-        'middleware' => 'auth:api',
     ], function () {
         # Demolitions data
         Route::get('/', 'DemolitionController@index');
-        Route::post('/', 'DemolitionController@store')->name('demolitions.create');
-
         Route::get('{id}', 'DemolitionController@demolitionDescription');
-        Route::post('cancel', 'DemolitionController@cancelDemolition');
-        Route::post('schedule', 'DemolitionController@scheduleDemolition');
+
+        // States
+        Route::post('create', 'DemolitionController@store')->name('demolitions.create'); // Requested
+        Route::post('visit', 'DemolitionController@waitForVisitDemolition');
         Route::post('quote', 'DemolitionController@quoteDemolition');
+        Route::post('schedule', 'DemolitionController@scheduleDemolition');
+        Route::post('attend', 'DemolitionController@attendedDemolition');
+        Route::post('paidout', 'DemolitionController@paidOutDemolition');
+        Route::post('cancel', 'DemolitionController@cancelDemolition');
     });
 });
 
