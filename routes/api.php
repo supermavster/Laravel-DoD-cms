@@ -19,25 +19,25 @@ Route::group(['namespace' => 'Api'], function () {
         'middleware' => 'auth:api',
     ], function () {
 
-        # Demolitions data
-        Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
-        Route::get('demolitions', 'DemolitionController@index');
-
         # Data Profile
         Route::get('profile', 'UserController@profile');
         Route::post('update', 'UserController@update');
         Route::post('changePassword', 'UserController@changePassword');
-        Route::post('logout', 'UserController@logout');
+        Route::get('logout', 'UserController@logout');
 
+        # Demolitions data
+        Route::get('demolitions', 'DemolitionController@index');
+        Route::post('demolitions', 'DemolitionController@store')->name('demolitions.create');
 
+        Route::get('demolition/{id}', 'DemolitionController@demolitionDescription');
         Route::post('cancel', 'DemolitionController@cancelDemolition');
         Route::post('schedule', 'DemolitionController@scheduleDemolition');
         Route::post('quote', 'DemolitionController@quoteDemolition');
-
         Route::post('quote', 'DemolitionController@quoteDemolition');
 
+        # Answere
         Route::post('answers', 'AnswerController@store');
-        Route::post('demolitions', 'DemolitionController@store');
+
 
         //reset Password
         // Route::get('find/{token}', 'PasswordResetController@find');

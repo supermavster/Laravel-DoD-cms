@@ -192,11 +192,18 @@ class UserController extends BaseController
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'status' => 'loguot'
+        if ($request) {
+            $request->user()->token()->revoke();
+            return response()->json([
+                'status' => 'loguot'
 
-        ], 403);
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'Token False'
+
+            ], 403);
+        }
     }
 
 
