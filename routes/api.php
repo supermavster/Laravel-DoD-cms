@@ -1,26 +1,14 @@
 <?php
 
-Route::group(['namespace' => 'Controller'], function () {
-
-    // Password
-    Route::post('create', 'PasswordResetController@create');
-    Route::get('password/find/{token}', 'PasswordResetController@find');
-    Route::post('reset', 'PasswordResetController@reset');
-
-    // Payment
-    Route::get('payment/status', 'PaymentController@getPaymentStatus')->name('payment_status');
-    // Auth Payment
-    Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
-        //create_payment
-        Route::post('payment', 'PaymentController@create_payment');
-        Route::post('refund', 'PaymentController@refund_deposit');
-    });
-});
+/**
+ * API Rest - Demond on Demand
+ */
 
 Route::group(['namespace' => 'Api'], function () {
-    //getPaymentStatus
-    Route::post('register/user', 'UserController@register');
-    Route::post('login/user', 'UserController@login');
+    
+    //  Auth User
+    Route::post('register', 'UserController@register');
+    Route::post('login', 'UserController@login');
 
     // Route::post('reset', 'ApiPasswordResetController@reset');
     Route::get('settings', 'SettingController@index');

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
+use Mail;
+use Validator;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-use Mail;
-use Validator;
 
 // use Illuminate\Support\Facades\Auth;
 
@@ -71,7 +71,7 @@ class UserController extends BaseController
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|email|unique:users.email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'companyName' => 'required',
             'password' => 'required',
@@ -79,22 +79,23 @@ class UserController extends BaseController
         ];
 
         $credentials = $request->only(
-            'name',
             'email',
+            'password',
+            'name',
             'phone',
             'companyName',
-            'companyAddress',
-            'password'
+            'companyAddress'
         );
-
-
+        
         $validator = Validator::make($credentials, $rules);
-
+        
         if ($validator->fails()) {
-            return $this->sendError('Incorrect Data', $validator->errors(), 400);
+            return $this->sendError('Incorrect Data', $validator->errors()->all(), 400);
         }
-
+        
         $user = new User();
+        
+        // Add data base
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;//bcrypt($request->password);
@@ -128,7 +129,7 @@ class UserController extends BaseController
 
             $user->image = 'demo_on_demand/public/media/user/img/' . $nameImg;
             $user->thumbnail = 'demo_on_demand/public/media/user/img/' . $nameThumb;
-            $user->rol_id = 2;
+            $user->role_id = 2;
 
         }
 
