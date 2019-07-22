@@ -50,20 +50,21 @@ Route::group(['namespace' => 'Controller'], function () {
 
     Route::get('notifications', 'NotificationController@index')->name('notifications');
 
-
+    # Crud Questionis
     Route::get('questions', 'QuestionController@index')->name('questions');
-
     Route::get('question', 'QuestionController@create')->name('question');
     Route::post('question', 'QuestionController@store');
-
     Route::get('question/{question}/edit', 'QuestionController@edit')->name('question.edit');
     Route::put('question/{question}', 'QuestionController@update');
-
     Route::delete('question/{question}', 'QuestionController@active')->name('question.active');
 
-
-
+    # Crud Advertisers
     Route::get('advertisers', 'AdvertiserController@index')->name('advertisers');
+    Route::get('advertiser', 'AdvertiserController@create')->name('advertiser');
+    Route::post('advertiser', 'AdvertiserController@store');
+    Route::get('advertiser/{advertiser}/edit', 'AdvertiserController@edit')->name('advertiser.edit');
+    Route::put('advertiser/{advertiser}', 'AdvertiserController@update');
+    Route::delete('advertiser/{advertiser}', 'AdvertiserController@active')->name('advertiser.active');
 });
 
 Route::get('/redirect', function () {

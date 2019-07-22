@@ -28,9 +28,7 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            $users = UserModel::all();
-            return view('pages.home', compact('users'));
+            return redirect()->route('home');
         }
     }
 

@@ -74,26 +74,18 @@
 
 <script type="text/javascript">
     $(window).on("load", function() {
-        var $myModal = jQuery('#my-modal');
-
+        var $myModal = $('#my-modal');
         // Modal to delete record
-        var $btDelete = jQuery('.btn-delete');
+        var $btDelete = $('.btn-delete');
         if ($btDelete.length) {
             $btDelete.click(function(e) {
                 e.preventDefault();
-
-                var url = jQuery(this).attr('href');
+                var url = $(this).attr('href');
                 var id = url.replace(/[^0-9]/g, '');
-
                 // Objects from alert modal
+                $('#form-modal').attr('action', url);
                 var $dsBody = $myModal.find('div.modal-body');
-                //var $btConfirm = jQuery('#bt-modal-confirm');
-                var $btCancel = jQuery('#bt-modal-cancel');
-                var $formBase = jQuery('#form-modal');
-                $formBase.attr('action', url);
                 $dsBody.html('<p>Are you sure you want to delete the question #' + id + '?</p>');
-
-                //$btConfirm.attr('href', url).removeAttr('data-dismiss');
             });
         }
     });

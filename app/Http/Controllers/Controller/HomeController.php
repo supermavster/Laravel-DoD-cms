@@ -30,7 +30,6 @@ class HomeController extends Controller
         $users = UserModel::orderBy('id', 'desc')->get();
         $demolitions = DemolitionModel::orderBy('id', 'desc')->with('user')->get();
         $payments = Payment::orderBy('id', 'desc')->get();
-
         return view('pages.home', compact('users', 'payments', 'demolitions'));
     }
 }

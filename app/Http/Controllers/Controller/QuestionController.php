@@ -17,7 +17,7 @@ class QuestionController extends Controller
 
     function create()
     {
-        return view('question.index');
+        return view('crud.question.index');
     }
 
     function store(Request $request)
@@ -51,7 +51,7 @@ class QuestionController extends Controller
 
     public function edit(Question $question)
     {
-        return view('question.edit', ['question' => $question]);
+        return view('crud.question.edit', ['question' => $question]);
     }
 
     function update(Question $question)
