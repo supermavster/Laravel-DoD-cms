@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+
+    protected $fillable = ['status', 'question'];
+
     public function answers()
     {
         return $this->belongsToMany('App\Models\Demolition', 'answers', 'question_id', 'demolition_id')

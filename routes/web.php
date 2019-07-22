@@ -14,9 +14,7 @@
 Auth::routes();
 Route::get('/', function () {
     return view('welcome');
-});
-
-
+})->middleware('auth');
 
 Route::get('verify/{code}', 'Api\UserController@verify');
 
@@ -52,7 +50,18 @@ Route::group(['namespace' => 'Controller'], function () {
 
     Route::get('notifications', 'NotificationController@index')->name('notifications');
 
+
     Route::get('questions', 'QuestionController@index')->name('questions');
+
+    Route::get('question', 'QuestionController@create')->name('question');
+    Route::post('question', 'QuestionController@store');
+
+    Route::get('question/{question}/edit', 'QuestionController@edit')->name('question.edit');
+    Route::put('question/{question}', 'QuestionController@update');
+
+    Route::delete('question/{question}', 'QuestionController@active')->name('question.active');
+
+
 
     Route::get('advertisers', 'AdvertiserController@index')->name('advertisers');
 });

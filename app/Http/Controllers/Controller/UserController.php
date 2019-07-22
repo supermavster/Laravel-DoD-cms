@@ -29,7 +29,8 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('pages.home');
+            $users = UserModel::all();
+            return view('pages.home', compact('users'));
         }
     }
 

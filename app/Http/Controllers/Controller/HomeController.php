@@ -32,6 +32,5 @@ class HomeController extends Controller
         $payments = Payment::orderBy('id', 'desc')->get();
 
         return view('pages.home', compact('users', 'payments', 'demolitions'));
-
     }
 }
