@@ -38,7 +38,7 @@
                                             <i class="fas fa-edit mx-1"></i>
                                             View/Edit
                                         </a>
-                                        <a class="btn btn-default btn-delete" data-toggle="modal" data-target="#my-modal" href="{{route('advertiser.active',$advertiser)}}"><i class="far fa-eye mx-1"></i> Active</a>
+                                        <a class="btn btn-default btn-delete" data-toggle="modal" data-target="#my-modal" href="{{route('advertiser.active',$advertiser)}}"><i class="far fa-trash mx-1"></i> Delete</a>
                                     </div>
                                 </form>
                             </td>

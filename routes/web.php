@@ -38,17 +38,16 @@ Route::group(['namespace' => 'Controller'], function () {
 
     # Demolition
     Route::get('demolitions', 'DemolitionsController@index')->name('demolitions');
-
     Route::get('demolitions/{demolition}/edit', 'DemolitionsController@edit')->name('demolitions.edit');
     Route::put('demolitions/{demolition}', 'DemolitionsController@update');
-
     Route::delete('demolitions/{demolition}', 'DemolitionsController@active')->name('demolitions.active');
     Route::post('demolitions', 'DemolitionsController@store');
-
     Route::get('images', 'DemolitionsController@home')->name('img');
-    #
 
+    # Crud Notifications
     Route::get('notifications', 'NotificationController@index')->name('notifications');
+    Route::post('notification', 'NotificationController@store')->name('notification');
+    Route::delete('notification/{notification}', 'NotificationController@active')->name('notification.active');
 
     # Crud Questionis
     Route::get('questions', 'QuestionController@index')->name('questions');
